@@ -6,7 +6,7 @@
 /*   By: gramos-d <gramos-d@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:31:24 by gramos-d          #+#    #+#             */
-/*   Updated: 2022/11/15 14:56:04 by gramos-d         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:46:25 by gramos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*get_next_line(int fd)
 	line = ft_strjoin(line, next);
 	if (!(ft_strchr(next, '\n')))
 	{
+		ft_strcpy(next, &next[ft_strlen(next)], BUFFER_SIZE);
 		len = read(fd, next, BUFFER_SIZE);
 		if (len < 0)
 		{
@@ -32,15 +33,14 @@ char	*get_next_line(int fd)
 		}
 		while (len > 0)
 		{
-			if (len < 1)
-				break ;
 			next[len] = 0;
 			line = ft_strjoin(line, next);
 			if (ft_strchr(next, '\n'))
 				break ;
+			ft_strcpy(next, &next[ft_strlen(next)], BUFFER_SIZE);
 			len = read(fd, next, BUFFER_SIZE);
 		}
 	}
-	ft_strcpy(next, &next[ft_strlen(next)]);
+	ft_strcpy(next, &next[ft_strlen(next)], BUFFER_SIZE);
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: gramos-d <gramos-d@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:35:39 by gramos-d          #+#    #+#             */
-/*   Updated: 2022/11/15 14:51:03 by gramos-d         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:39:02 by gramos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,15 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (line);
 }
 
-char	*ft_strcpy(char *dst, char *src)
+char	*ft_strcpy(char *dst, char *src, int len)
 {
 	int	i;
 
 	i = -1;
 	while (src[++i])
 		dst[i] = src[i];
-	dst[i++] = 0;
+	while (i < len)
+		dst[i++] = 0;
 	return (dst);
 }
 
