@@ -6,11 +6,21 @@
 /*   By: gramos-d <gramos-d@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:31:24 by gramos-d          #+#    #+#             */
-/*   Updated: 2022/11/15 15:46:25 by gramos-d         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:57:26 by gramos-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+int	aux(char *next, int fd)
+{
+	int	len;
+
+	ft_strcpy(next, &next[ft_strlen(next)], BUFFER_SIZE);
+	len = read(fd, next, BUFFER_SIZE);
+
+	return (len);
+}
 
 char	*get_next_line(int fd)
 {
@@ -20,12 +30,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (0);
-	line = NULL;
-	line = ft_strjoin(line, next);
+	line = ft_strjoin(0, next);
 	if (!(ft_strchr(next, '\n')))
 	{
-		ft_strcpy(next, &next[ft_strlen(next)], BUFFER_SIZE);
-		len = read(fd, next, BUFFER_SIZE);
+		len = aux(next, fd);
 		if (len < 0)
 		{
 			free (line);
@@ -33,12 +41,10 @@ char	*get_next_line(int fd)
 		}
 		while (len > 0)
 		{
-			next[len] = 0;
 			line = ft_strjoin(line, next);
 			if (ft_strchr(next, '\n'))
 				break ;
-			ft_strcpy(next, &next[ft_strlen(next)], BUFFER_SIZE);
-			len = read(fd, next, BUFFER_SIZE);
+			len = aux(next, fd);
 		}
 	}
 	ft_strcpy(next, &next[ft_strlen(next)], BUFFER_SIZE);
